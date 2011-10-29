@@ -33,12 +33,13 @@ class Module extends \Venne\Developer\Module\AutoModule {
 		$router[] = new \Nette\Application\Routers\Route($prefix . '<action>', array(
 					'module' => 'Register',
 					'presenter' => 'Default',
-					'action' => 'default',
-					'url' => array(
-		\Nette\Application\Routers\Route::VALUE => NULL,
-		\Nette\Application\Routers\Route::FILTER_IN => NULL,
-		\Nette\Application\Routers\Route::FILTER_OUT => NULL,
+					'action' => 'default'
 		)
+		);
+		$router[] = new \Nette\Application\Routers\Route($prefix . 'confirm/<id>/<hash>', array(
+							'module' => 'Register',
+							'presenter' => 'Default',
+							'action' => 'confirm'
 		)
 		);
 	}
@@ -47,7 +48,7 @@ class Module extends \Venne\Developer\Module\AutoModule {
 	public function setServices(\Venne\Application\Container $container)
 	{
 		parent::setServices($container);
-		$container->services->addService("user", function() use ($container) {
+		$container->services->addService("register", function() use ($container) {
 			return new \App\SecurityModule\UserService($container, "user", $container->doctrineContainer->entityManager);
 		}
 		);
