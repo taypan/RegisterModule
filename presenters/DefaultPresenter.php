@@ -20,7 +20,8 @@ class DefaultPresenter extends \Venne\Developer\Presenter\FrontPresenter {
 
 	public function createComponentRegisterForm($name)
 	{
-		$form = new \Nette\Application\UI\Form;
+		$form = new \Venne\Forms\Form($this,$name);
+		$form->addGroup('Přihlašovací údaje');
 		$form->addText('name', 'Uživatelské jméno:')
 		->setRequired('Zadejte prosím jméno');
 		$form->addPassword('password', 'Heslo:')
@@ -31,7 +32,39 @@ class DefaultPresenter extends \Venne\Developer\Presenter\FrontPresenter {
 		$form->addText('email', 'Email:')
 		->setRequired('Zadejte prosím email')
 		->addRule(\Nette\Application\UI\Form::EMAIL, 'Zadejte platný email');
+		
+		$form->addGroup('Osobní údaje');
+		$form->addText('firstname',"Jméno:")
+		->setRequired('Zadejte prosím jméno');
+		$form->addText('lastname',"Příjmení:")
+		->setRequired('Zadejte prosím příjmení');
+		
+		
+		$form->addDate('birthdate',"Datum narození")
+		->addRule(\Nette\Forms\Form::FILLED, 'Zadejte datum narození');
+		
+		$form->addText('street',"Ulice:")
+		->addRule(\Nette\Forms\Form::FILLED, 'Zadejte ulici');
+		$form->addText('streetnumber',"Číslo popisné:")
+		->addRule(\Nette\Forms\Form::FILLED, 'Zadejte číslo popisné');
+		$form->addText('city',"Město:")
+		->addRule(\Nette\Forms\Form::FILLED, 'Zadejte město');
+		$form->addText('zipcode',"PSČ:")
+		->addRule(\Nette\Forms\Form::FILLED, 'Zadejte PSČ ve tvaru 12345')
+		->addRule(\Nette\Forms\Form::LENGTH, 'Zadejte PSČ ve tvaru 12345',5)
+		->addRule(\Nette\Forms\Form::INTEGER, 'Zadejte PSČ ve tvaru 12345',5);
+		
+		$form->addGroup('Podmínky registrace');
+		$form->addCheckbox('sendmail',"Posílat e-maily");
+		$form->addCheckbox('accept',"Souhlasím s podmínkami registrace")
+		->addRule(\Nette\Forms\Form::FILLED, 'Musíte souhlasit s podmínkami');
+		
+		
 		$form->addSubmit('register', 'Registrovat');
+		
+		
+		
+		
 		$form->onSuccess[] = callback($this, 'signInFormSubmitted');
 
 		return $form;

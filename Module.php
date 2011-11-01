@@ -49,7 +49,7 @@ class Module extends \Venne\Developer\Module\AutoModule {
 	{
 		parent::setServices($container);
 		$container->services->addService("register", function() use ($container) {
-			return new \App\SecurityModule\UserService($container, "user", $container->doctrineContainer->entityManager);
+			return new UserService($container, "user", $container->doctrineContainer->entityManager);
 		}
 		);
 	}
