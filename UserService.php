@@ -65,7 +65,7 @@ class UserService extends \Venne\Developer\Service\DoctrineService {
 	{
 		$item = $this->repository->findOneByName($entity->name);
 		if($item){
-			throw new UserNameExistsException("Username ".$entity->name." already exists");
+			throw new \App\SecurityModule\UserNameExistsException("Username ".$entity->name." already exists");
 		}
 		$item = $this->repository->findOneByEmail($entity->email);
 		if($item){

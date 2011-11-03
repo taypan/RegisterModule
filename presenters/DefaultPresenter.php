@@ -80,7 +80,6 @@ class DefaultPresenter extends \Venne\Developer\Presenter\FrontPresenter {
 
 
 
-
 		$form->onSuccess[] = callback($this, 'signInFormSubmitted');
 
 		return $form;
@@ -90,7 +89,13 @@ class DefaultPresenter extends \Venne\Developer\Presenter\FrontPresenter {
 	{
 		$values = $form->getValues();
 		$values['enable'] = false;
-		$entity = $this->presenter->context->services->register->create($values);
+		try{
+			$entity = $this->presenter->context->services->register->create($values);
+		}catch(\Exception $ex){
+			$form['name']->addError("Uživatel již existuje.");
+			return;
+			//$this->redirect('default');
+		}
 
 		$hash = substr(md5($entity->salt . $entity->email), 0, 20);
 		$adminMail = $this->context->params['adminMail'];
