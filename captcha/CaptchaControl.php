@@ -150,17 +150,19 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	 */
 	public static function register()
 	{
-		if (self::$registered)
-			throw new \Nette\InvalidStateException(__CLASS__ . " is already registered");
+		if (self::$registered){
+			return;
+		}
+		//throw new \Nette\InvalidStateException(__CLASS__ . " is already registered");
 
 		$session = Environment::getSession();
 		if (!$session->isStarted())
-			$session->start();
+		$session->start();
 
 		self::$session = $session->getSection('PavelMaca.Captcha');
 
 		if (!self::$defaultFontFile)
-			self::$defaultFontFile = __DIR__ . "/Vera.ttf";
+		self::$defaultFontFile = __DIR__ . "/Vera.ttf";
 
 
 		FormContainer::extensionMethod('addCaptcha', callback(__CLASS__, 'addCaptcha'));
@@ -205,7 +207,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/**
 	 * @param int
-	 * @return CaptchaControl provides a fluent interface 
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setLength($length)
 	{
@@ -223,7 +225,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/**
 	 * @param int
-	 * @return CaptchaControl provides a fluent interface 
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setFontSize($size)
 	{
@@ -232,7 +234,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getFontSize()
 	{
@@ -262,8 +264,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int 
-	 * @return CaptchaControl provides a fluent interface 
+	 * @param int
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setTextMargin($margin)
 	{
@@ -302,8 +304,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int 
-	 * @return CaptchaControl provides a fluent interface 
+	 * @param int
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setImageHeight($heightt)
 	{
@@ -312,7 +314,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getImageHeight()
 	{
@@ -320,8 +322,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int 
-	 * @return CaptchaControl provides a fluent interface 
+	 * @param int
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setImageWidth($width)
 	{
@@ -330,7 +332,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getImageWidth()
 	{
@@ -385,7 +387,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getExpire()
 	{
@@ -393,7 +395,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * Use numbers in captcha image? 
+	 * Use numbers in captcha image?
 	 * @param bool
 	 * @return CaptchaControl provides a fluent interface
 	 */
@@ -429,7 +431,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	private function setSession($uid, $word)
 	{
 		if (!self::$session)
-			throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
+		throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
 
 
 		self::$session->$uid = $word;
@@ -437,13 +439,13 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return string|bool return false if key not found 
+	 * @return string|bool return false if key not found
 	 * @throws \Nette\InvalidStateException
 	 */
 	private function getSession($uid)
 	{
 		if (!self::$session)
-			throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
+		throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
 
 
 		return isset(self::$session[$uid]) ? self::$session[$uid] : false;
@@ -508,7 +510,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		//$image->height = $this->getImageHeight();
 
 		if (!isset($image->alt))
-			$image->alt = "Captcha";
+		$image->alt = "Captcha";
 
 		return $image;
 	}
