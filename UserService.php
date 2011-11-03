@@ -65,11 +65,11 @@ class UserService extends \Venne\Developer\Service\DoctrineService {
 	{
 		$item = $this->repository->findOneByName($entity->name);
 		if($item){
-			throw new \App\SecurityModule\UserNameExistsException("Username ".$entity->name." already exists");
+			throw new \App\SecurityModule\UserNameExistsException("Uživatelské jméno ".$entity->name." již existuje.");
 		}
 		$item = $this->repository->findOneByEmail($entity->email);
 		if($item){
-			throw new UserEmailExistsException("E-mail ".$entity->email." already exists");
+			throw new \App\SecurityModule\UserEmailExistsException("E-mail ".$entity->email." již existuje.");
 		}
 		return true;
 	}

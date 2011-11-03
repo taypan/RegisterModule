@@ -92,7 +92,7 @@ class DefaultPresenter extends \Venne\Developer\Presenter\FrontPresenter {
 		try{
 			$entity = $this->presenter->context->services->register->create($values);
 		}catch(\Exception $ex){
-			$form['name']->addError("Uživatel již existuje.");
+			$form['name']->addError($ex->getMessage());
 			return;
 			//$this->redirect('default');
 		}
